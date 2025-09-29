@@ -2,7 +2,7 @@
 
 > **React용 선언적 drawer 관리 라이브러리** - [toss/overlay-kit](https://github.com/toss/overlay-kit)에서 영감을 받아 제작
 
-간단하고 직관적인 API로 drawer 컴포넌트를 관리할 수 있는 강력하고 유연한 React 라이브러리입니다. [vaul](https://vaul.dev/)을 기반으로 구축되었으며, toss/overlay-kit의 우아한 디자인에서 영감을 받았습니다.
+간단하고 직관적인 API로 drawer 컴포넌트를 관리할 수 있는 강력하고 유연한 React 라이브러리입니다. [vaul](https://vaul.emilkowal.ski/)을 기반으로 구축되었으며, toss/overlay-kit의 우아한 디자인에서 영감을 받았습니다.
 
 [![npm version](https://badge.fury.io/js/drawer-kit.svg)](https://badge.fury.io/js/drawer-kit)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -55,8 +55,8 @@ function MyComponent() {
   const openDrawer = () => {
     drawer.open(({ close, unmount }) => (
       <div style={{ padding: "20px" }}>
-        <h2>Drawer에서 안녕하세요!</h2>
-        <p>이것은 간단한 drawer 예제입니다.</p>
+        <h2>안녕하세요!</h2>
+        <p>간단한 drawer 예제입니다.</p>
         <button onClick={close}>닫기</button>
         <button onClick={unmount}>언마운트</button>
       </div>
@@ -78,7 +78,7 @@ function MyComponent() {
       const result = await drawer.openAsync(({ close, unmount }) => (
         <div style={{ padding: "20px" }}>
           <h2>작업 확인</h2>
-          <p>정말로 진행하시겠습니까?</p>
+          <p>진행하시겠습니까?</p>
           <button onClick={() => close("confirmed")}>예</button>
           <button onClick={() => close("cancelled")}>아니오</button>
         </div>
@@ -86,7 +86,7 @@ function MyComponent() {
 
       console.log("사용자 선택:", result); // 'confirmed' 또는 'cancelled'
     } catch (error) {
-      console.log("Drawer가 취소되었습니다");
+      console.log("취소되었습니다");
     }
   };
 
@@ -155,17 +155,17 @@ drawer.unmountAll();
 
 ### DrawerOptions
 
-| 옵션               | 타입                                     | 기본값          | 설명                                           |
-| ------------------ | ---------------------------------------- | --------------- | ---------------------------------------------- |
-| `direction`        | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'`      | drawer가 열리는 방향                           |
-| `modal`            | `boolean`                                | `true`          | drawer가 모달인지 여부 (배경 상호작용 차단)    |
-| `dismissible`      | `boolean`                                | `true`          | 드래그나 외부 클릭으로 닫을 수 있는지 여부     |
-| `container`        | `HTMLElement`                            | `document.body` | drawer 포털의 컨테이너 요소                    |
-| `handleOnly`       | `boolean`                                | `false`         | 핸들 영역만 드래그 가능한지 여부               |
-| `repositionInputs` | `boolean`                                | `false`         | 키보드가 나타날 때 입력 필드를 재배치할지 여부 |
-| `onOpenChange`     | `(open: boolean) => void`                | -               | drawer 열림 상태 변경 시 콜백                  |
-| `onClose`          | `() => void`                             | -               | drawer가 닫힐 때 콜백                          |
-| `onAnimationEnd`   | `(open: boolean) => void`                | -               | drawer 애니메이션 종료 시 콜백                 |
+| 옵션               | 타입                                     | 기본값          | 설명                                  |
+| ------------------ | ---------------------------------------- | --------------- | ------------------------------------- |
+| `direction`        | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'`      | drawer 열리는 방향                    |
+| `modal`            | `boolean`                                | `true`          | 모달 여부 (배경 상호작용 차단)        |
+| `dismissible`      | `boolean`                                | `true`          | 드래그나 외부 클릭으로 닫기 가능 여부 |
+| `container`        | `HTMLElement`                            | `document.body` | drawer 포털 컨테이너 요소             |
+| `handleOnly`       | `boolean`                                | `false`         | 핸들 영역만 드래그 가능 여부          |
+| `repositionInputs` | `boolean`                                | `false`         | 키보드 표시 시 입력 필드 재배치 여부  |
+| `onOpenChange`     | `(open: boolean) => void`                | -               | 열림 상태 변경 콜백                   |
+| `onClose`          | `() => void`                             | -               | 닫힘 콜백                             |
+| `onAnimationEnd`   | `(open: boolean) => void`                | -               | 애니메이션 종료 콜백                  |
 
 ### Controller Props
 
@@ -173,15 +173,15 @@ drawer.unmountAll();
 
 ```tsx
 interface DrawerControllerProps {
-  isOpen: boolean; // 현재 열림 상태
-  close: () => void; // drawer를 닫는 함수
-  unmount: () => void; // drawer를 언마운트하는 함수
+  isOpen: boolean; // 열림 상태
+  close: () => void; // 닫기 함수
+  unmount: () => void; // 언마운트 함수
 }
 
 // 비동기 drawer용
 interface DrawerAsyncControllerProps<T> {
   isOpen: boolean;
-  close: (result: T) => void; // 결과와 함께 닫는 함수
+  close: (result: T) => void; // 결과와 함께 닫기
   unmount: () => void;
 }
 ```
@@ -219,13 +219,13 @@ drawer.open(MyComponent, { modal: false });
 ```tsx
 drawer.open(MyComponent, {
   onOpenChange: (open) => {
-    console.log("Drawer 상태:", open ? "열림" : "닫힘");
+    console.log("상태:", open ? "열림" : "닫힘");
   },
   onClose: () => {
-    console.log("Drawer가 닫혔습니다");
+    console.log("닫혔습니다");
   },
   onAnimationEnd: (open) => {
-    console.log("애니메이션 완료, drawer 상태:", open ? "열림" : "닫힘");
+    console.log("애니메이션 완료:", open ? "열림" : "닫힘");
   },
 });
 ```
@@ -234,7 +234,7 @@ drawer.open(MyComponent, {
 
 ```tsx
 drawer.open(MyComponent, {
-  handleOnly: true, // 핸들 영역만 드래그 가능
+  handleOnly: true, // 핸들만 드래그 가능
   direction: "bottom",
 });
 ```
@@ -243,7 +243,7 @@ drawer.open(MyComponent, {
 
 ```tsx
 drawer.open(MyComponent, {
-  repositionInputs: true, // 키보드가 나타날 때 입력 필드 재배치
+  repositionInputs: true, // 키보드 표시 시 입력 필드 재배치
   direction: "bottom",
 });
 ```
@@ -317,8 +317,8 @@ const handleComplexFlow = async () => {
     const confirmed = await drawer.openAsync(({ close }) => (
       <div>
         <h2>항목 삭제</h2>
-        <p>정말로 이 항목을 삭제하시겠습니까?</p>
-        <button onClick={() => close(true)}>예, 삭제</button>
+        <p>이 항목을 삭제하시겠습니까?</p>
+        <button onClick={() => close(true)}>삭제</button>
         <button onClick={() => close(false)}>취소</button>
       </div>
     ));
@@ -329,7 +329,7 @@ const handleComplexFlow = async () => {
     const progressDrawer = drawer.open(({ close }) => (
       <div>
         <h2>삭제 중...</h2>
-        <div>항목을 삭제하는 동안 잠시만 기다려주세요.</div>
+        <div>삭제 중입니다...</div>
         <button onClick={close}>닫기</button>
       </div>
     ));
@@ -342,12 +342,12 @@ const handleComplexFlow = async () => {
     await drawer.openAsync(({ close }) => (
       <div>
         <h2>성공!</h2>
-        <p>항목이 성공적으로 삭제되었습니다.</p>
+        <p>삭제가 완료되었습니다.</p>
         <button onClick={() => close()}>확인</button>
       </div>
     ));
   } catch (error) {
-    console.error("작업이 취소되었습니다:", error);
+    console.error("취소되었습니다:", error);
   }
 };
 ```
@@ -436,25 +436,21 @@ src/
 ## 🙏 감사의 말
 
 - [toss/overlay-kit](https://github.com/toss/overlay-kit) - 우아한 API 디자인 영감을 주셔서 감사합니다
-- [vaul](https://vaul.dev/) - 부드러운 drawer 애니메이션과 모바일 상호작용을 위해
+- [vaul](https://vaul.emilkowal.ski/) - 부드러운 drawer 애니메이션과 모바일 상호작용을 위해
 - [React](https://reactjs.org/) - 훌륭한 프레임워크를 위해
 - [TypeScript](https://www.typescriptlang.org/) - 타입 안전성을 위해
 
 ## 📞 지원
 
-- 📧 이메일: support@drawer-kit.dev
+- 📧 이메일: jinseok9338@gmail.com
 - 🐛 이슈: [GitHub Issues](https://github.com/your-username/drawer-kit/issues)
 - 💬 토론: [GitHub Discussions](https://github.com/your-username/drawer-kit/discussions)
 
 ---
 
 <div align="center">
-  <p>Drawer-Kit 팀이 ❤️로 만들었습니다</p>
+  <p>Drawer-Kit을 ❤️로 만들었습니다</p>
   <p>
     <a href="https://github.com/your-username/drawer-kit">⭐ GitHub에서 스타를 눌러주세요</a>
-    •
-    <a href="https://twitter.com/drawer_kit">🐦 트위터 팔로우</a>
-    •
-    <a href="https://discord.gg/drawer-kit">💬 Discord 참여</a>
   </p>
 </div>
