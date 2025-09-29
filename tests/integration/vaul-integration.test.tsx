@@ -237,9 +237,10 @@ describe("Vaul Integration Features Tests", () => {
 
     it("should support non-modal behavior (background interaction allowed)", async () => {
       const user = userEvent.setup();
-      let backgroundInteracted = false;
 
       const TestComponent = () => {
+        const [backgroundInteracted, setBackgroundInteracted] = React.useState(false);
+
         const openNonModalDrawer = () => {
           drawer.open(
             ({ close }) => (
@@ -259,7 +260,7 @@ describe("Vaul Integration Features Tests", () => {
           <DrawerProvider>
             <button
               onClick={() => {
-                backgroundInteracted = true;
+                setBackgroundInteracted(true);
               }}
               data-testid="interactive-bg"
             >
@@ -287,8 +288,6 @@ describe("Vaul Integration Features Tests", () => {
       await waitFor(() => {
         expect(screen.getByTestId("bg-interacted")).toBeInTheDocument();
       });
-
-      expect(backgroundInteracted).toBe(true);
     });
   });
 

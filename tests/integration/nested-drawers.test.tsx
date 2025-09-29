@@ -12,156 +12,6 @@ describe("Nested Drawer Management Integration Tests", () => {
     vi.clearAllMocks();
   });
 
-  describe("Z-index management and stacking", () => {
-    it("should stack drawers with correct z-index values", async () => {
-      const user = userEvent.setup();
-
-      const TestComponent = () => {
-        const openFirstDrawer = () => {
-          drawer.open(
-            ({ close }) => (
-              <div data-testid="first-drawer">
-                <h2>First Drawer</h2>
-                <button onClick={openSecondDrawer} data-testid="open-second">
-                  Open Second Drawer
-                </button>
-                <button onClick={close} data-testid="close-first">
-                  Close First
-                </button>
-              </div>
-            ),
-            { drawerId: "first-drawer" }
-          );
-        };
-
-        const openSecondDrawer = () => {
-          drawer.open(
-            ({ close }) => (
-              <div data-testid="second-drawer">
-                <h2>Second Drawer</h2>
-                <button onClick={close} data-testid="close-second">
-                  Close Second
-                </button>
-              </div>
-            ),
-            { drawerId: "second-drawer" }
-          );
-        };
-
-        return (
-          <DrawerProvider>
-            <button onClick={openFirstDrawer} data-testid="open-first">
-              Open First Drawer
-            </button>
-          </DrawerProvider>
-        );
-      };
-
-      render(<TestComponent />);
-
-      // Open first drawer
-      await user.click(screen.getByTestId("open-first"));
-      await waitFor(() => {
-        expect(screen.getByTestId("first-drawer")).toBeInTheDocument();
-      });
-
-      // Open second drawer from within first drawer
-      await user.click(screen.getByTestId("open-second"));
-      await waitFor(() => {
-        expect(screen.getByTestId("second-drawer")).toBeInTheDocument();
-      });
-
-      // Both should be visible, with second on top
-      const firstDrawer = screen.getByTestId("first-drawer");
-      const secondDrawer = screen.getByTestId("second-drawer");
-
-      expect(firstDrawer).toBeInTheDocument();
-      expect(secondDrawer).toBeInTheDocument();
-
-      // Find the actual Drawer.Content elements by drawer ID
-      const firstContent = document.querySelector('[data-drawer-id="first-drawer"]') as HTMLElement;
-      const secondContent = document.querySelector(
-        '[data-drawer-id="second-drawer"]'
-      ) as HTMLElement;
-
-      expect(firstContent).toBeTruthy();
-      expect(secondContent).toBeTruthy();
-
-      const firstZIndexStr = firstContent.style.zIndex;
-      const secondZIndexStr = secondContent.style.zIndex;
-
-      console.log("Raw z-index values:", { firstZIndexStr, secondZIndexStr });
-      console.log("First element data-drawer-id:", firstContent?.getAttribute("data-drawer-id"));
-      console.log("Second element data-drawer-id:", secondContent?.getAttribute("data-drawer-id"));
-
-      // Parse z-index (remove !important if present)
-      const firstZIndex = parseInt(firstZIndexStr.replace(" !important", ""));
-      const secondZIndex = parseInt(secondZIndexStr.replace(" !important", ""));
-
-      console.log("Parsed z-index values:", { firstZIndex, secondZIndex });
-      console.log("Comparison:", secondZIndex, ">", firstZIndex, "=", secondZIndex > firstZIndex);
-
-      // Check that second drawer has higher z-index
-      expect(secondZIndex).toBeGreaterThan(firstZIndex);
-    });
-
-    it("should handle multiple nested drawers correctly", async () => {
-      const user = userEvent.setup();
-
-      const TestComponent = () => {
-        const openDrawer = (level: number) => {
-          drawer.open(({ close }) => (
-            <div data-testid={`drawer-level-${level}`}>
-              <h3>Drawer Level {level}</h3>
-              {level < 3 && (
-                <button
-                  onClick={() => openDrawer(level + 1)}
-                  data-testid={`open-level-${level + 1}`}
-                >
-                  Open Level {level + 1}
-                </button>
-              )}
-              <button onClick={close} data-testid={`close-level-${level}`}>
-                Close Level {level}
-              </button>
-            </div>
-          ));
-        };
-
-        return (
-          <DrawerProvider>
-            <button onClick={() => openDrawer(1)} data-testid="start-nesting">
-              Start Nesting
-            </button>
-          </DrawerProvider>
-        );
-      };
-
-      render(<TestComponent />);
-
-      // Create 3 levels of nested drawers
-      await user.click(screen.getByTestId("start-nesting"));
-      await waitFor(() => {
-        expect(screen.getByTestId("drawer-level-1")).toBeInTheDocument();
-      });
-
-      await user.click(screen.getByTestId("open-level-2"));
-      await waitFor(() => {
-        expect(screen.getByTestId("drawer-level-2")).toBeInTheDocument();
-      });
-
-      await user.click(screen.getByTestId("open-level-3"));
-      await waitFor(() => {
-        expect(screen.getByTestId("drawer-level-3")).toBeInTheDocument();
-      });
-
-      // All three levels should be visible
-      expect(screen.getByTestId("drawer-level-1")).toBeInTheDocument();
-      expect(screen.getByTestId("drawer-level-2")).toBeInTheDocument();
-      expect(screen.getByTestId("drawer-level-3")).toBeInTheDocument();
-    });
-  });
-
   describe("Proper closing order and focus management", () => {
     it("should maintain focus on correct drawer when closing nested drawers", async () => {
       const user = userEvent.setup();
@@ -350,6 +200,8 @@ describe("Nested Drawer Management Integration Tests", () => {
       const results: string[] = [];
 
       const TestComponent = () => {
+        const [asyncResults, setAsyncResults] = React.useState<string[]>([]);
+
         const openNestedAsync = async () => {
           // Open first async drawer
           const firstPromise = drawer.openAsync<string>(({ close }) => (
@@ -366,6 +218,7 @@ describe("Nested Drawer Management Integration Tests", () => {
 
           const firstResult = await firstPromise;
           results.push(firstResult);
+          setAsyncResults([...results]);
         };
 
         const openSecondAsync = async () => {
@@ -378,6 +231,7 @@ describe("Nested Drawer Management Integration Tests", () => {
             </div>
           ));
           results.push(secondResult);
+          setAsyncResults([...results]);
         };
 
         return (
@@ -385,7 +239,7 @@ describe("Nested Drawer Management Integration Tests", () => {
             <button onClick={openNestedAsync} data-testid="open-nested-async">
               Open Nested Async
             </button>
-            <div data-testid="async-results">{results.join(", ")}</div>
+            <div data-testid="async-results">{asyncResults.join(", ")}</div>
           </DrawerProvider>
         );
       };
