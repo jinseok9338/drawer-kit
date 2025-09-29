@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+*.min.js
+*.min.css
+.next/
+.vscode/
+.idea/
+*.log
+.DS_Store
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+
