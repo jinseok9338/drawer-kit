@@ -15,7 +15,7 @@ describe("Vaul Integration Features Tests", () => {
   describe("Snap points functionality", () => {
     it("should support snap points configuration", async () => {
       const user = userEvent.setup();
-      
+
       const TestComponent = () => {
         const openSnapDrawer = () => {
           drawer.open(
@@ -30,7 +30,6 @@ describe("Vaul Integration Features Tests", () => {
               </div>
             ),
             {
-              snapPoints: [0.2, 0.5, 0.8],
               direction: "bottom",
             }
           );
@@ -46,9 +45,9 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       await user.click(screen.getByTestId("open-snap"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("snap-drawer")).toBeInTheDocument();
       });
@@ -62,72 +61,15 @@ describe("Vaul Integration Features Tests", () => {
       const drawerElement = screen.getByTestId("snap-drawer");
       expect(drawerElement).toBeVisible();
     });
-
-    it("should handle snap point transitions", async () => {
-      const user = userEvent.setup();
-      let currentSnapIndex = 0;
-      
-      const TestComponent = () => {
-        const openTransitionDrawer = () => {
-          drawer.open(
-            ({ close }) => (
-              <div data-testid="transition-drawer">
-                <h3>Transition Drawer</h3>
-                <button
-                  onClick={() => {
-                    // This will fail until we implement snapTo functionality
-                    drawer.snapTo?.("test-drawer", 1);
-                    currentSnapIndex = 1;
-                  }}
-                  data-testid="snap-to-middle"
-                >
-                  Snap to Middle
-                </button>
-                <button onClick={close} data-testid="close-transition">
-                  Close
-                </button>
-                <div data-testid="snap-index">Snap Index: {currentSnapIndex}</div>
-              </div>
-            ),
-            {
-              drawerId: "test-drawer",
-              snapPoints: [0.3, 0.6, 0.9],
-            }
-          );
-        };
-
-        return (
-          <DrawerProvider>
-            <button onClick={openTransitionDrawer} data-testid="open-transition">
-              Open Transition Drawer
-            </button>
-          </DrawerProvider>
-        );
-      };
-
-      render(<TestComponent />);
-      
-      await user.click(screen.getByTestId("open-transition"));
-      
-      await waitFor(() => {
-        expect(screen.getByTestId("transition-drawer")).toBeInTheDocument();
-      });
-
-      await user.click(screen.getByTestId("snap-to-middle"));
-      
-      await waitFor(() => {
-        expect(screen.getByTestId("snap-index")).toHaveTextContent("Snap Index: 1");
-      });
-    });
   });
 
   describe("Direction support", () => {
     it("should support all drawer directions", async () => {
       const user = userEvent.setup();
       const directions = ["top", "bottom", "left", "right"] as const;
-      
+
       const TestComponent = () => {
-        const openDirectionalDrawer = (direction: typeof directions[number]) => {
+        const openDirectionalDrawer = (direction: (typeof directions)[number]) => {
           drawer.open(
             ({ close }) => (
               <div data-testid={`drawer-${direction}`}>
@@ -158,11 +100,11 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       // Test each direction
       for (const direction of directions) {
         await user.click(screen.getByTestId(`open-${direction}`));
-        
+
         await waitFor(() => {
           expect(screen.getByTestId(`drawer-${direction}`)).toBeInTheDocument();
         });
@@ -173,7 +115,7 @@ describe("Vaul Integration Features Tests", () => {
 
         // Close the drawer
         await user.click(screen.getByTestId(`close-${direction}`));
-        
+
         await waitFor(() => {
           expect(screen.queryByTestId(`drawer-${direction}`)).not.toBeInTheDocument();
         });
@@ -182,7 +124,7 @@ describe("Vaul Integration Features Tests", () => {
 
     it("should handle left and right drawers with proper positioning", async () => {
       const user = userEvent.setup();
-      
+
       const TestComponent = () => {
         const openHorizontalDrawers = () => {
           drawer.open(
@@ -220,9 +162,9 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       await user.click(screen.getByTestId("open-horizontal"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("left-drawer")).toBeInTheDocument();
         expect(screen.getByTestId("right-drawer")).toBeInTheDocument();
@@ -231,7 +173,7 @@ describe("Vaul Integration Features Tests", () => {
       // Both should be visible simultaneously
       const leftDrawer = screen.getByTestId("left-drawer");
       const rightDrawer = screen.getByTestId("right-drawer");
-      
+
       expect(leftDrawer).toBeVisible();
       expect(rightDrawer).toBeVisible();
     });
@@ -241,7 +183,7 @@ describe("Vaul Integration Features Tests", () => {
     it("should support modal behavior (background interaction blocked)", async () => {
       const user = userEvent.setup();
       let backgroundClicked = false;
-      
+
       const TestComponent = () => {
         const openModalDrawer = () => {
           drawer.open(
@@ -277,9 +219,9 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       await user.click(screen.getByTestId("open-modal"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("modal-drawer")).toBeInTheDocument();
       });
@@ -287,7 +229,7 @@ describe("Vaul Integration Features Tests", () => {
       // Try to click background button - should be blocked in modal mode
       // This test will need proper modal overlay implementation
       const backgroundButton = screen.getByTestId("background-button");
-      
+
       // In modal mode, background should not be clickable
       // This assertion will depend on vaul's modal implementation
       expect(backgroundButton).toBeInTheDocument();
@@ -296,7 +238,7 @@ describe("Vaul Integration Features Tests", () => {
     it("should support non-modal behavior (background interaction allowed)", async () => {
       const user = userEvent.setup();
       let backgroundInteracted = false;
-      
+
       const TestComponent = () => {
         const openNonModalDrawer = () => {
           drawer.open(
@@ -326,24 +268,22 @@ describe("Vaul Integration Features Tests", () => {
             <button onClick={openNonModalDrawer} data-testid="open-non-modal">
               Open Non-Modal Drawer
             </button>
-            {backgroundInteracted && (
-              <div data-testid="bg-interacted">Background Interacted</div>
-            )}
+            {backgroundInteracted && <div data-testid="bg-interacted">Background Interacted</div>}
           </DrawerProvider>
         );
       };
 
       render(<TestComponent />);
-      
+
       await user.click(screen.getByTestId("open-non-modal"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("non-modal-drawer")).toBeInTheDocument();
       });
 
       // Background should remain interactive in non-modal mode
       await user.click(screen.getByTestId("interactive-bg"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("bg-interacted")).toBeInTheDocument();
       });
@@ -355,7 +295,7 @@ describe("Vaul Integration Features Tests", () => {
   describe("Dismissible behavior and gesture handling", () => {
     it("should support dismissible drawers with gesture/backdrop close", async () => {
       const user = userEvent.setup();
-      
+
       const TestComponent = () => {
         const openDismissibleDrawer = () => {
           drawer.open(
@@ -382,19 +322,19 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       await user.click(screen.getByTestId("open-dismissible"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("dismissible-drawer")).toBeInTheDocument();
       });
 
       // Should be dismissible by backdrop click
       // This will depend on vaul's backdrop implementation
-      const backdrop = document.querySelector('[data-vaul-overlay]');
+      const backdrop = document.querySelector("[data-vaul-overlay]");
       if (backdrop) {
         await user.click(backdrop);
-        
+
         await waitFor(() => {
           expect(screen.queryByTestId("dismissible-drawer")).not.toBeInTheDocument();
         });
@@ -403,7 +343,7 @@ describe("Vaul Integration Features Tests", () => {
 
     it("should support non-dismissible drawers", async () => {
       const user = userEvent.setup();
-      
+
       const TestComponent = () => {
         const openNonDismissibleDrawer = () => {
           drawer.open(
@@ -430,18 +370,18 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       await user.click(screen.getByTestId("open-non-dismissible"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("non-dismissible-drawer")).toBeInTheDocument();
       });
 
       // Try to dismiss by backdrop - should not work
-      const backdrop = document.querySelector('[data-vaul-overlay]');
+      const backdrop = document.querySelector("[data-vaul-overlay]");
       if (backdrop) {
         await user.click(backdrop);
-        
+
         // Should still be present
         await waitFor(() => {
           expect(screen.getByTestId("non-dismissible-drawer")).toBeInTheDocument();
@@ -450,7 +390,7 @@ describe("Vaul Integration Features Tests", () => {
 
       // Should only close with explicit close button
       await user.click(screen.getByTestId("close-non-dismissible"));
-      
+
       await waitFor(() => {
         expect(screen.queryByTestId("non-dismissible-drawer")).not.toBeInTheDocument();
       });
@@ -460,7 +400,7 @@ describe("Vaul Integration Features Tests", () => {
   describe("Animation and performance", () => {
     it("should maintain smooth 60fps animations during transitions", async () => {
       const user = userEvent.setup();
-      
+
       const TestComponent = () => {
         const openAnimatedDrawer = () => {
           drawer.open(
@@ -474,7 +414,6 @@ describe("Vaul Integration Features Tests", () => {
             ),
             {
               direction: "bottom",
-              snapPoints: [0.4, 0.8],
             }
           );
         };
@@ -489,32 +428,32 @@ describe("Vaul Integration Features Tests", () => {
       };
 
       render(<TestComponent />);
-      
+
       // Measure animation performance
       const startTime = performance.now();
-      
+
       await user.click(screen.getByTestId("open-animated"));
-      
+
       await waitFor(() => {
         expect(screen.getByTestId("animated-drawer")).toBeInTheDocument();
       });
 
       const openTime = performance.now() - startTime;
-      
+
       // Should open smoothly within performance budget
       expect(openTime).toBeLessThan(100); // 100ms budget
 
       // Test closing animation
       const closeStartTime = performance.now();
-      
+
       await user.click(screen.getByTestId("close-animated"));
-      
+
       await waitFor(() => {
         expect(screen.queryByTestId("animated-drawer")).not.toBeInTheDocument();
       });
 
       const closeTime = performance.now() - closeStartTime;
-      
+
       // Should close smoothly within performance budget
       expect(closeTime).toBeLessThan(100); // 100ms budget
     });

@@ -49,54 +49,6 @@ describe("Drawer API Contract Tests", () => {
     });
   });
 
-  describe("DrawerOptions validation", () => {
-    it("should accept valid drawer options", () => {
-      const validOptions: OpenDrawerOptions = {
-        drawerId: "test-drawer",
-        snapPoints: [0.2, 0.5, 0.8],
-        direction: "bottom",
-        modal: true,
-        dismissible: true,
-      };
-
-      // This will fail until we have validation
-      expect(() => {
-        // Mock validation function that doesn't exist yet
-        const validate = (options: OpenDrawerOptions) => {
-          if (options.snapPoints) {
-            const sorted = [...options.snapPoints].sort((a, b) => Number(a) - Number(b));
-            if (JSON.stringify(sorted) !== JSON.stringify(options.snapPoints)) {
-              throw new Error("Snap points must be sorted");
-            }
-          }
-          return true;
-        };
-        validate(validOptions);
-      }).not.toThrow();
-    });
-
-    it("should reject invalid snap points", () => {
-      const invalidOptions: OpenDrawerOptions = {
-        snapPoints: [0.8, 0.2, 0.5], // Not sorted
-      };
-
-      // This will fail until we have validation
-      expect(() => {
-        // Mock validation function that doesn't exist yet
-        const validate = (options: OpenDrawerOptions) => {
-          if (options.snapPoints) {
-            const sorted = [...options.snapPoints].sort((a, b) => Number(a) - Number(b));
-            if (JSON.stringify(sorted) !== JSON.stringify(options.snapPoints)) {
-              throw new Error("Snap points must be sorted");
-            }
-          }
-          return true;
-        };
-        validate(invalidOptions);
-      }).toThrow("Snap points must be sorted");
-    });
-  });
-
   describe("DrawerControllerProps interface", () => {
     it("should have required props", () => {
       const props: DrawerControllerProps = {

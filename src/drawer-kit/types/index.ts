@@ -13,38 +13,14 @@ export type DrawerDirection = "top" | "bottom" | "left" | "right";
 export interface DrawerOptions {
   // Vaul-specific options
   direction?: DrawerDirection;
-  snapPoints?: (string | number)[];
   modal?: boolean;
   dismissible?: boolean;
-  shouldScaleBackground?: boolean;
-  setBackgroundColorOnScale?: boolean;
-  closeThreshold?: number;
-  scrollLockTimeout?: number;
-  fixed?: boolean;
   container?: HTMLElement;
-  defaultOpen?: boolean;
-  disablePreventScroll?: boolean;
-  autoFocus?: boolean;
-
-  // Handle and interaction options
   handleOnly?: boolean;
   repositionInputs?: boolean;
 
-  // Snap points specific options
-  snapToSequentialPoint?: boolean;
-  fadeFromIndex?: number;
-  activeSnapPoint?: number | string | null;
-  setActiveSnapPoint?: (snapPoint: number | string | null) => void;
-
-  // Animation and styling
-  noBodyStyles?: boolean;
-  preventScrollRestoration?: boolean;
-
-  // Event callbacks
   onOpenChange?: (open: boolean) => void;
   onClose?: () => void;
-  onDrag?: (event: React.PointerEvent, percentageDragged: number) => void;
-  onRelease?: (event: React.PointerEvent, open: boolean) => void;
   onAnimationEnd?: (open: boolean) => void;
 }
 
@@ -85,9 +61,6 @@ export interface DrawerAPI {
   unmount: (drawerId: DrawerId) => void;
   closeAll: () => void;
   unmountAll: () => void;
-
-  // Snap point control
-  snapTo?: (drawerId: DrawerId, snapPointIndex: number) => void;
 }
 
 // ===== Provider Props =====

@@ -28,7 +28,6 @@ describe("Drawer State Contract Tests", () => {
         isOpen: true,
         controller: vi.fn(),
         options: {
-          snapPoints: [0.5, 1],
           direction: "bottom",
           modal: true,
           dismissible: true,

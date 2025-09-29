@@ -71,13 +71,6 @@ const drawerAPI: DrawerAPI = {
   unmountAll: (): void => {
     drawerEventEmitter.emit("unmountAll");
   },
-
-  // Snap point control (placeholder implementation)
-  snapTo: (drawerId: DrawerId, snapPointIndex: number): void => {
-    // TODO: Implement snap point control
-    // This would need to communicate with vaul's snap point system
-    console.warn(`snapTo not yet implemented: ${drawerId} -> ${snapPointIndex}`);
-  },
 };
 
 // ===== Exports =====

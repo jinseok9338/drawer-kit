@@ -34,7 +34,6 @@ describe("Drawer Events Contract Tests", () => {
         drawerId: "test-id",
         componentKey: "component-key",
         options: {
-          snapPoints: [0.5, 1],
           direction: "bottom",
           modal: true,
           dismissible: true,
@@ -46,7 +45,6 @@ describe("Drawer Events Contract Tests", () => {
         drawerId: "test-id",
         componentKey: "component-key",
         options: {
-          snapPoints: [0.5, 1],
           direction: "bottom",
           modal: true,
           dismissible: true,
@@ -131,7 +129,7 @@ describe("Drawer Events Contract Tests", () => {
         controller: vi.fn(),
         drawerId: "drawer-123",
         componentKey: "comp-456",
-        snapPoints: [0.3, 0.7],
+
         direction: "bottom" as const,
         modal: true,
         dismissible: false,

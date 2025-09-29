@@ -10,7 +10,7 @@ export type DrawerDirection = "top" | "bottom" | "left" | "right";
 // Configuration Options
 export interface DrawerOptions {
   drawerId?: string;
-  snapPoints?: number[];
+
   direction?: DrawerDirection;
   modal?: boolean;
   dismissible?: boolean;

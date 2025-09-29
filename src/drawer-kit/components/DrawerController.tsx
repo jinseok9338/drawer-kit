@@ -10,6 +10,7 @@ import type {
   DrawerControllerProps,
   DrawerAsyncControllerProps,
   DrawerDirection,
+  DrawerOptions,
 } from "../types";
 import type { DrawerItem } from "../context/reducer";
 import { drawerEventEmitter } from "../events";
@@ -93,52 +94,14 @@ export function DrawerController({
     direction: options.direction || "bottom",
     modal: options.modal !== false,
     dismissible: options.dismissible !== false,
-    ...(options.shouldScaleBackground !== undefined && {
-      shouldScaleBackground: options.shouldScaleBackground,
-    }),
-    ...(options.setBackgroundColorOnScale !== undefined && {
-      setBackgroundColorOnScale: options.setBackgroundColorOnScale,
-    }),
-    ...(options.closeThreshold !== undefined && { closeThreshold: options.closeThreshold }),
-    ...(options.scrollLockTimeout !== undefined && {
-      scrollLockTimeout: options.scrollLockTimeout,
-    }),
-    ...(options.fixed !== undefined && { fixed: options.fixed }),
-    ...(options.defaultOpen !== undefined && { defaultOpen: options.defaultOpen }),
-    ...(options.disablePreventScroll !== undefined && {
-      disablePreventScroll: options.disablePreventScroll,
-    }),
-    ...(options.autoFocus !== undefined && { autoFocus: options.autoFocus }),
-    ...(options.snapPoints !== undefined && {
-      snapPoints: options.snapPoints,
-      // Set first snapPoint as default activeSnapPoint if not provided
-      activeSnapPoint:
-        options.activeSnapPoint !== undefined ? options.activeSnapPoint : options.snapPoints[0],
-      // Set fadeFromIndex to last snapPoint if not provided
-      fadeFromIndex:
-        options.fadeFromIndex !== undefined ? options.fadeFromIndex : options.snapPoints.length - 1,
-    }),
-    ...(options.fadeFromIndex !== undefined &&
-      options.snapPoints === undefined && { fadeFromIndex: options.fadeFromIndex }),
-    ...(options.activeSnapPoint !== undefined &&
-      options.snapPoints === undefined && { activeSnapPoint: options.activeSnapPoint }),
-    ...(options.setActiveSnapPoint !== undefined && {
-      setActiveSnapPoint: options.setActiveSnapPoint,
-    }),
-    ...(options.snapToSequentialPoint !== undefined && {
-      snapToSequentialPoint: options.snapToSequentialPoint,
-    }),
-    ...(options.onClose !== undefined && { onClose: options.onClose }),
-    ...(options.onDrag !== undefined && { onDrag: options.onDrag }),
-    ...(options.onRelease !== undefined && { onRelease: options.onRelease }),
-    ...(options.onAnimationEnd !== undefined && { onAnimationEnd: options.onAnimationEnd }),
-    ...(options.preventScrollRestoration !== undefined && {
-      preventScrollRestoration: options.preventScrollRestoration,
-    }),
-    ...(options.noBodyStyles !== undefined && { noBodyStyles: options.noBodyStyles }),
+    ...(options.handleOnly !== undefined && { handleOnly: options.handleOnly }),
     ...(options.repositionInputs !== undefined && { repositionInputs: options.repositionInputs }),
     ...(options.container !== undefined && { container: options.container }),
-  } as const;
+    ...(options.onClose !== undefined && { onClose: options.onClose }),
+    ...(options.onAnimationEnd !== undefined && { onAnimationEnd: options.onAnimationEnd }),
+  } as DrawerOptions & {
+    open: boolean;
+  };
 
   const insetStyle = (options: DrawerDirection | undefined) => {
     switch (options) {
@@ -155,7 +118,7 @@ export function DrawerController({
   };
 
   return (
-    <Drawer.Root {...(drawerRootProps as any)}>
+    <Drawer.Root {...drawerRootProps}>
       <Drawer.Portal container={options.container}>
         <Drawer.Overlay
           style={{

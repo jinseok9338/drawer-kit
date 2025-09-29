@@ -3,11 +3,7 @@
  * Redux-style state management for drawer lifecycle
  */
 
-import {
-  DrawerControllerComponent,
-  DrawerId,
-  DrawerDirection,
-} from "./drawer-api";
+import { DrawerControllerComponent, DrawerId, DrawerDirection } from "./drawer-api";
 
 // State Types
 export interface DrawerItem {
@@ -16,7 +12,7 @@ export interface DrawerItem {
   isOpen: boolean;
   isMounted: boolean;
   controller: DrawerControllerComponent;
-  snapPoints?: number[];
+
   direction: DrawerDirection;
   modal: boolean;
   dismissible: boolean;
@@ -40,10 +36,7 @@ export type DrawerReducerAction =
   | { type: "REMOVE_ALL" };
 
 // Reducer Function Type
-export type DrawerReducer = (
-  state: DrawerState,
-  action: DrawerReducerAction
-) => DrawerState;
+export type DrawerReducer = (state: DrawerState, action: DrawerReducerAction) => DrawerState;
 
 // State Selectors
 export interface DrawerSelectors {

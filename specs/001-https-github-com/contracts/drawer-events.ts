@@ -11,7 +11,7 @@ export interface DrawerEvent {
     controller: DrawerControllerComponent;
     drawerId: string;
     componentKey: string;
-    snapPoints?: number[];
+
     direction: "top" | "bottom" | "left" | "right";
     modal: boolean;
     dismissible: boolean;
@@ -20,7 +20,6 @@ export interface DrawerEvent {
   unmount: (drawerId: string) => void;
   closeAll: () => void;
   unmountAll: () => void;
-  snapTo: (drawerId: string, snapIndex: number) => void;
 }
 
 // Event Emitter Interface

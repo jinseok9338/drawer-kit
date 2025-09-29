@@ -8,9 +8,11 @@ import { DrawerProvider } from "./drawer-kit";
 import BasicDrawer from "./test-ui/examples/BasicDrawer";
 import AdvancedDrawer from "./test-ui/examples/AdvancedDrawer";
 import TestScenarios from "./test-ui/components/TestScenarios";
+
+import SimpleDrawerOptionsTest from "./test-ui/examples/SimpleDrawerOptionsTest";
 import "./App.css";
 
-type TestPage = "basic" | "advanced" | "scenarios";
+type TestPage = "basic" | "advanced" | "scenarios" | "simple-options";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<TestPage>("basic");
@@ -23,6 +25,8 @@ export default function App() {
         return <AdvancedDrawer />;
       case "scenarios":
         return <TestScenarios />;
+      case "simple-options":
+        return <SimpleDrawerOptionsTest />;
       default:
         return <BasicDrawer />;
     }
@@ -84,6 +88,22 @@ export default function App() {
               }}
             >
               Test Scenarios
+            </button>
+
+            <button
+              onClick={() => setCurrentPage("simple-options")}
+              style={{
+                padding: "10px 20px",
+                border: "2px solid #007acc",
+                background: currentPage === "simple-options" ? "#007acc" : "white",
+                color: currentPage === "simple-options" ? "white" : "#007acc",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: "500",
+              }}
+            >
+              Simple Options
             </button>
           </div>
         </nav>
