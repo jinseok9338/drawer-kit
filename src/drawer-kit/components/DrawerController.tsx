@@ -5,7 +5,12 @@
 
 import React, { useCallback } from "react";
 import { Drawer } from "vaul";
-import type { DrawerId, DrawerControllerProps, DrawerAsyncControllerProps } from "../types";
+import type {
+  DrawerId,
+  DrawerControllerProps,
+  DrawerAsyncControllerProps,
+  DrawerDirection,
+} from "../types";
 import type { DrawerItem } from "../context/reducer";
 import { drawerEventEmitter } from "../events";
 import "./index.css";
@@ -135,7 +140,20 @@ export function DrawerController({
     ...(options.container !== undefined && { container: options.container }),
   } as const;
 
-  // ===== Render =====
+  const insetStyle = (options: DrawerDirection | undefined) => {
+    switch (options) {
+      case "top":
+        return { top: 0, left: 0, right: 0 };
+      case "bottom":
+        return { bottom: 0, left: 0, right: 0 };
+      case "left":
+        return { left: 0, top: 0, bottom: 0 };
+      case "right":
+        return { right: 0, top: 0, bottom: 0 };
+    }
+    return { left: 0, right: 0, bottom: 0 };
+  };
+
   return (
     <Drawer.Root {...(drawerRootProps as any)}>
       <Drawer.Portal container={options.container}>
@@ -143,11 +161,13 @@ export function DrawerController({
           style={{
             zIndex: zIndex - 1,
             position: "fixed",
-            bottom: 0,
+            top: 0,
             left: 0,
             right: 0,
-            backgroundColor: "black",
-            opacity: 0.4,
+            bottom: 0,
+            height: "100%",
+            width: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
           }}
         />
         <VisuallyHidden>
@@ -159,12 +179,9 @@ export function DrawerController({
           style={{
             zIndex: zIndex,
             position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
+            ...insetStyle(options.direction),
             opacity: 1,
             outline: "none",
-            backgroundColor: "gray",
           }}
         >
           <Controller {...(controllerProps as any)} />

@@ -138,6 +138,7 @@ export default function BasicDrawer() {
             borderRadius: "8px",
             minHeight: "200px",
             width: "100%",
+            height: "100%",
             color: "#333",
           }}
         >
