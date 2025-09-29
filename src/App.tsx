@@ -8,7 +8,6 @@ import { DrawerProvider } from "./drawer-kit";
 import BasicDrawer from "./test-ui/examples/BasicDrawer";
 import AdvancedDrawer from "./test-ui/examples/AdvancedDrawer";
 import TestScenarios from "./test-ui/components/TestScenarios";
-// import "vaul/style.css";
 import "./App.css";
 
 type TestPage = "basic" | "advanced" | "scenarios";

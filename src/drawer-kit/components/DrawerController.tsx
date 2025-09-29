@@ -8,12 +8,31 @@ import { Drawer } from "vaul";
 import type { DrawerId, DrawerControllerProps, DrawerAsyncControllerProps } from "../types";
 import type { DrawerItem } from "../context/reducer";
 import { drawerEventEmitter } from "../events";
+import "./index.css";
 
 interface DrawerControllerComponentProps {
   drawerId: DrawerId;
   drawerItem: DrawerItem;
   zIndex?: number;
 }
+
+const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
+  <span
+    style={{
+      position: "absolute",
+      width: "1px",
+      height: "1px",
+      padding: 0,
+      margin: "-1px",
+      overflow: "hidden",
+      clip: "rect(0, 0, 0, 0)",
+      whiteSpace: "nowrap",
+      border: 0,
+    }}
+  >
+    {children}
+  </span>
+);
 
 export function DrawerController({
   drawerId,
@@ -143,6 +162,10 @@ export function DrawerController({
           className="drawer-kit-overlay"
           style={{ zIndex: `${zIndex - 1} !important` }}
         />
+        <VisuallyHidden>
+          <Drawer.Title>Drawer</Drawer.Title>
+          <Drawer.Description>A drawer component for displaying content</Drawer.Description>
+        </VisuallyHidden>
         <Drawer.Content
           className="drawer-kit-content"
           data-drawer-id={drawerId}
