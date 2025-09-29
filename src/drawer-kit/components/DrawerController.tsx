@@ -135,41 +135,37 @@ export function DrawerController({
     ...(options.container !== undefined && { container: options.container }),
   } as const;
 
-  // ===== Debug logging =====
-  console.log(`DrawerController ${drawerId}:`, {
-    isOpen,
-    snapPoints: options.snapPoints,
-    direction: options.direction,
-    activeSnapPoint: options.snapPoints
-      ? options.activeSnapPoint !== undefined
-        ? options.activeSnapPoint
-        : options.snapPoints[0]
-      : options.activeSnapPoint,
-    fadeFromIndex: options.snapPoints
-      ? options.fadeFromIndex !== undefined
-        ? options.fadeFromIndex
-        : options.snapPoints.length - 1
-      : options.fadeFromIndex,
-    drawerRootProps: drawerRootProps,
-  });
-
   // ===== Render =====
   return (
     <Drawer.Root {...(drawerRootProps as any)}>
-      {/* Always use Portal for proper positioning and z-index */}
       <Drawer.Portal container={options.container}>
         <Drawer.Overlay
-          className="drawer-kit-overlay"
-          style={{ zIndex: `${zIndex - 1} !important` }}
+          style={{
+            zIndex: zIndex - 1,
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "black",
+            opacity: 0.4,
+          }}
         />
         <VisuallyHidden>
           <Drawer.Title>Drawer</Drawer.Title>
           <Drawer.Description>A drawer component for displaying content</Drawer.Description>
         </VisuallyHidden>
         <Drawer.Content
-          className="drawer-kit-content"
           data-drawer-id={drawerId}
-          style={{ zIndex: `${zIndex} !important` }}
+          style={{
+            zIndex: zIndex,
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            opacity: 1,
+            outline: "none",
+            backgroundColor: "gray",
+          }}
         >
           <Controller {...(controllerProps as any)} />
         </Drawer.Content>
