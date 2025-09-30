@@ -1,6 +1,6 @@
 {
   "name": "drawer-kit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "A declarative React drawer management library inspired by toss/overlay-kit",
   "keywords": [
