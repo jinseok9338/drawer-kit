@@ -4,8 +4,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 
 // These imports will fail until we implement the drawer-kit
-import { DrawerProvider } from "@/context/provider";
-import { drawer } from "@/index";
+import { DrawerProvider } from "../../src/drawer-kit/context/provider";
+import { drawer } from "../../src/drawer-kit";
 
 describe("Vaul Integration Features Tests", () => {
   beforeEach(() => {

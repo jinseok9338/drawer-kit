@@ -2,10 +2,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
+import "@testing-library/jest-dom";
 
 // These imports will fail until we implement the drawer-kit
-import { DrawerProvider } from "@/context/provider";
-import { drawer, useDrawerData } from "@/index";
+import { DrawerProvider } from "../../src/drawer-kit/context/provider";
+import { drawer, useDrawerData } from "../../src/drawer-kit";
 
 describe("Nested Drawer Management Integration Tests", () => {
   beforeEach(() => {

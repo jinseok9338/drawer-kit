@@ -1,6 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
-import { drawerEventEmitter } from "@/events";
-import type { DrawerEvent, DrawerEventEmitter, ExternalEventSystem } from "@/events";
+import { drawerEventEmitter } from "../../src/drawer-kit/events";
+import type {
+  DrawerEvent,
+  DrawerEventEmitter,
+  ExternalEventSystem,
+} from "../../src/drawer-kit/events";
 
 describe("Drawer Events Contract Tests", () => {
   describe("DrawerEvent interface", () => {

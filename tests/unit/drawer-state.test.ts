@@ -1,11 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
-import { drawerReducer, DrawerSelectors } from "@/context/reducer";
+import { drawerReducer, DrawerSelectors } from "../../src/drawer-kit/context/reducer";
 import type {
   DrawerState,
   DrawerItem,
   DrawerReducerAction,
   DrawerReducer,
-} from "@/context/reducer";
+} from "../../src/drawer-kit/context/reducer";
 
 describe("Drawer State Contract Tests", () => {
   describe("DrawerState interface", () => {

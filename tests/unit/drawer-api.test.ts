@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { drawer } from "@/index";
+import { drawer } from "../../src/drawer-kit";
 import type {
   DrawerAPI,
   DrawerOptions,
@@ -8,7 +8,7 @@ import type {
   DrawerAsyncControllerProps,
   DrawerControllerComponent,
   DrawerAsyncControllerComponent,
-} from "@/types";
+} from "../../src/drawer-kit/types";
 
 describe("Drawer API Contract Tests", () => {
   describe("DrawerAPI interface", () => {

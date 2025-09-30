@@ -35,6 +35,9 @@ export default defineConfig({
     env: {
       REACT_VERSION: "19",
     },
+    typecheck: {
+      tsconfig: "./tsconfig.test.json",
+    },
   },
   resolve: {
     alias: {
