@@ -2,7 +2,7 @@
 
 > **React용 선언적 drawer 관리 라이브러리** - [toss/overlay-kit](https://github.com/toss/overlay-kit)에서 영감을 받아 제작
 
-간단하고 직관적인 API로 drawer 컴포넌트를 관리할 수 있는 강력하고 유연한 React 라이브러리입니다. [vaul](https://vaul.emilkowal.ski/)을 기반으로 구축되었으며, toss/overlay-kit의 우아한 디자인에서 영감을 받았습니다.
+간단하고 직관적인 API로 drawer 컴포넌트를 관리할 수 있는 강력하고 유연한 React 라이브러리입니다. [vaul](https://vaul.emilkowal.ski/)을 기반으로 구축되었으며, toss/overlay-kit의 디자인에서 영감을 받았습니다.
 
 [![npm version](https://badge.fury.io/js/drawer-kit.svg)](https://badge.fury.io/js/drawer-kit)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -16,7 +16,7 @@
 - 📱 **모바일 최적화** - 부드러운 모바일 상호작용을 위한 vaul 기반
 - 🎭 **다양한 방향** - 상단, 하단, 좌측, 우측 drawer 지원
 - 🔄 **비동기 지원** - Promise 기반 drawer 상호작용
-- 🎪 **이벤트 시스템** - drawer 생명주기에 대한 풍부한 이벤트 콜백
+- 🎪 **이벤트 시스템** - drawer 생명주기 (lifecycle) 에 대한 이벤트 콜백
 
 ## 📦 설치
 
@@ -389,7 +389,7 @@ Drawer-kit은 합리적인 기본값을 제공하지만 완전한 커스터마�
 
 ```bash
 # 저장소 클론
-git clone https://github.com/your-username/drawer-kit.git
+git clone https://github.com/jinseok9338/drawer-kit.git
 cd drawer-kit
 
 # 의존성 설치
@@ -443,14 +443,14 @@ src/
 ## 📞 지원
 
 - 📧 이메일: jinseok9338@gmail.com
-- 🐛 이슈: [GitHub Issues](https://github.com/your-username/drawer-kit/issues)
-- 💬 토론: [GitHub Discussions](https://github.com/your-username/drawer-kit/discussions)
+- 🐛 이슈: [GitHub Issues](https://github.com/jinseok9338/drawer-kit/issues)
+- 💬 토론: [GitHub Discussions](https://github.com/jinseok9338/drawer-kit/discussions)
 
 ---
 
 <div align="center">
   <p>Drawer-Kit을 ❤️로 만들었습니다</p>
   <p>
-    <a href="https://github.com/your-username/drawer-kit">⭐ GitHub에서 스타를 눌러주세요</a>
+    <a href="https://github.com/jinseok9338/drawer-kit">⭐ GitHub에서 스타를 눌러주세요</a>
   </p>
 </div>
