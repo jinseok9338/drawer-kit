@@ -161,7 +161,6 @@ drawer.unmountAll();
 | `modal`            | `boolean`                                | `true`          | 모달 여부 (배경 상호작용 차단)        |
 | `dismissible`      | `boolean`                                | `true`          | 드래그나 외부 클릭으로 닫기 가능 여부 |
 | `container`        | `HTMLElement`                            | `document.body` | drawer 포털 컨테이너 요소             |
-| `handleOnly`       | `boolean`                                | `false`         | 핸들 영역만 드래그 가능 여부          |
 | `repositionInputs` | `boolean`                                | `false`         | 키보드 표시 시 입력 필드 재배치 여부  |
 | `onOpenChange`     | `(open: boolean) => void`                | -               | 열림 상태 변경 콜백                   |
 | `onClose`          | `() => void`                             | -               | 닫힘 콜백                             |
@@ -230,11 +229,11 @@ drawer.open(MyComponent, {
 });
 ```
 
-### 핸들 전용 드래그
+### 비닫기 가능한 Drawer
 
 ```tsx
 drawer.open(MyComponent, {
-  handleOnly: true, // 핸들만 드래그 가능
+  dismissible: false, // 외부 클릭이나 드래그로 닫기 불가
   direction: "bottom",
 });
 ```

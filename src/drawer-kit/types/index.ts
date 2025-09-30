@@ -16,7 +16,6 @@ export interface DrawerOptions {
   modal?: boolean;
   dismissible?: boolean;
   container?: HTMLElement;
-  handleOnly?: boolean;
   repositionInputs?: boolean;
 
   onOpenChange?: (open: boolean) => void;

@@ -90,11 +90,10 @@ export function DrawerController({
   // ===== Build Props Conditionally =====
   const drawerRootProps = {
     open: isOpen,
-    onOpenChange: handleOpenChange,
+    onOpenChange: options.dismissible === false ? undefined : handleOpenChange,
     direction: options.direction || "bottom",
     modal: options.modal !== false,
     dismissible: options.dismissible !== false,
-    ...(options.handleOnly !== undefined && { handleOnly: options.handleOnly }),
     ...(options.repositionInputs !== undefined && { repositionInputs: options.repositionInputs }),
     ...(options.container !== undefined && { container: options.container }),
     ...(options.onClose !== undefined && { onClose: options.onClose }),
@@ -131,6 +130,7 @@ export function DrawerController({
             height: "100%",
             width: "100%",
             backgroundColor: "rgba(0, 0, 0, 0.4)",
+            pointerEvents: options.dismissible === false ? "none" : "auto",
           }}
         />
         <VisuallyHidden>

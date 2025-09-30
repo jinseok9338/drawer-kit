@@ -164,6 +164,59 @@ export default function TestScenarios() {
     drawer.unmountAll();
   };
 
+  const openDismissibleDrawer = () => {
+    drawer.open(
+      ({ close }) => (
+        <div style={{ padding: "20px", background: "white", borderRadius: "8px" }}>
+          <h3>Dismissible Drawer</h3>
+          <p>This drawer can be closed by clicking outside or dragging.</p>
+          <button
+            onClick={close}
+            style={{
+              padding: "8px 16px",
+              background: "#007acc",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Close
+          </button>
+        </div>
+      ),
+      { dismissible: true }
+    );
+  };
+
+  const openNonDismissibleDrawer = () => {
+    drawer.open(
+      ({ close }) => (
+        <div style={{ padding: "20px", background: "white", borderRadius: "8px" }}>
+          <h3>Non-Dismissible Drawer</h3>
+          <p style={{ color: "#dc3545", fontWeight: "bold" }}>
+            ⚠️ This drawer CANNOT be closed by clicking outside or dragging!
+          </p>
+          <p>You must use the close button below.</p>
+          <button
+            onClick={close}
+            style={{
+              padding: "8px 16px",
+              background: "#dc3545",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Close (Only Way)
+          </button>
+        </div>
+      ),
+      { dismissible: false }
+    );
+  };
+
   const averagePerformance =
     performanceResults.length > 0
       ? Math.round(
@@ -344,6 +397,60 @@ export default function TestScenarios() {
           >
             Run Memory Leak Test
           </button>
+        </section>
+
+        {/* Dismissible Test */}
+        <section>
+          <h3 style={{ margin: "0 0 10px 0", color: "#555" }}>Dismissible Behavior Test</h3>
+          <p style={{ margin: "0 0 15px 0", color: "#666", fontSize: "14px" }}>
+            Test the dismissible behavior - try clicking outside or dragging to close drawers.
+          </p>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <button
+              onClick={openDismissibleDrawer}
+              style={{
+                padding: "12px 24px",
+                background: "#28a745",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: "500",
+              }}
+            >
+              Open Dismissible Drawer
+            </button>
+            <button
+              onClick={openNonDismissibleDrawer}
+              style={{
+                padding: "12px 24px",
+                background: "#dc3545",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: "500",
+              }}
+            >
+              Open Non-Dismissible Drawer
+            </button>
+          </div>
+          <div
+            style={{
+              marginTop: "10px",
+              padding: "10px",
+              background: "#fff3cd",
+              border: "1px solid #ffeaa7",
+              borderRadius: "4px",
+            }}
+          >
+            <p style={{ margin: "0", fontSize: "14px", color: "#856404" }}>
+              <strong>Test Instructions:</strong> Try clicking outside the drawers or dragging them.
+              The dismissible drawer should close, but the non-dismissible drawer should stay open.
+            </p>
+          </div>
         </section>
 
         {/* Cleanup Controls */}

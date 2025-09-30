@@ -161,7 +161,6 @@ drawer.unmountAll();
 | `modal`            | `boolean`                                | `true`          | Whether the drawer is modal (blocks background interaction)         |
 | `dismissible`      | `boolean`                                | `true`          | Whether the drawer can be dismissed by dragging or clicking outside |
 | `container`        | `HTMLElement`                            | `document.body` | Container element for the drawer portal                             |
-| `handleOnly`       | `boolean`                                | `false`         | Whether only the handle area is draggable                           |
 | `repositionInputs` | `boolean`                                | `false`         | Whether to reposition inputs when keyboard appears                  |
 | `onOpenChange`     | `(open: boolean) => void`                | -               | Callback when drawer open state changes                             |
 | `onClose`          | `() => void`                             | -               | Callback when drawer is closed                                      |
@@ -230,11 +229,11 @@ drawer.open(MyComponent, {
 });
 ```
 
-### Handle Only Dragging
+### Non-Dismissible Drawer
 
 ```tsx
 drawer.open(MyComponent, {
-  handleOnly: true, // Only the handle area is draggable
+  dismissible: false, // Cannot be closed by clicking outside or dragging
   direction: "bottom",
 });
 ```
