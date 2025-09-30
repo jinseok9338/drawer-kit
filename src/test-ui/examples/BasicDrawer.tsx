@@ -295,7 +295,6 @@ export default function BasicDrawer() {
                   ),
                   {
                     direction: "bottom",
-                    handleOnly: false, // Allow dragging from anywhere
                   }
                 );
               }}
@@ -337,7 +336,6 @@ export default function BasicDrawer() {
                   ),
                   {
                     direction: "bottom",
-                    handleOnly: true, // Only allow dragging from handle
                   }
                 );
               }}

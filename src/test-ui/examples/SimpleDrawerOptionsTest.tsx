@@ -102,34 +102,6 @@ export default function SimpleDrawerOptionsTest() {
     addResult(`Opened ${dismissible ? "dismissible" : "non-dismissible"} drawer`);
   };
 
-  const testHandleOnly = (handleOnly: boolean) => {
-    const options: DrawerOptions = { handleOnly };
-    setCurrentOptions(options);
-
-    drawer.open(
-      ({ close, unmount }) => (
-        <div style={drawerStyle}>
-          <h3>Handle Only Test: {handleOnly ? "Handle Only" : "Full Drawer"}</h3>
-          <p>
-            Handle only:{" "}
-            {handleOnly ? "Only handle area is draggable" : "Entire drawer is draggable"}
-          </p>
-          <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-            <button onClick={close} style={buttonStyle("#007acc")}>
-              Close
-            </button>
-            <button onClick={unmount} style={buttonStyle("#dc3545")}>
-              Unmount
-            </button>
-          </div>
-        </div>
-      ),
-      options
-    );
-
-    addResult(`Opened ${handleOnly ? "handle-only" : "full"} drawer`);
-  };
-
   const testRepositionInputs = (reposition: boolean) => {
     const options: DrawerOptions = { repositionInputs: reposition };
     setCurrentOptions(options);
@@ -205,7 +177,7 @@ export default function SimpleDrawerOptionsTest() {
       direction: "bottom",
       modal: true,
       dismissible: true,
-      handleOnly: false,
+
       repositionInputs: true,
       onOpenChange: (open) => addResult(`Complex onOpenChange: ${open}`),
       onClose: () => addResult("Complex onClose called"),
@@ -222,7 +194,6 @@ export default function SimpleDrawerOptionsTest() {
             <li>Bottom direction</li>
             <li>Modal enabled</li>
             <li>Dismissible enabled</li>
-            <li>Handle only disabled (full drawer draggable)</li>
             <li>Input repositioning enabled</li>
           </ul>
           <input
@@ -382,20 +353,6 @@ export default function SimpleDrawerOptionsTest() {
           </button>
           <button onClick={() => testDismissible(false)} style={buttonStyle("#ffc107")}>
             Non-Dismissible
-          </button>
-        </div>
-      </div>
-
-      {/* Handle Only Tests */}
-      <div style={sectionStyle}>
-        <h3>Handle Only Tests</h3>
-        <p>Test handle-only vs full drawer draggable behavior</p>
-        <div style={optionGridStyle}>
-          <button onClick={() => testHandleOnly(true)} style={buttonStyle("#fd7e14")}>
-            Handle Only
-          </button>
-          <button onClick={() => testHandleOnly(false)} style={buttonStyle("#fd7e14")}>
-            Full Drawer
           </button>
         </div>
       </div>
