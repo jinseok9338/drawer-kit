@@ -3,7 +3,7 @@
  * Based on overlay-kit provider with vaul integration
  */
 
-import React, { useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import type { DrawerProviderProps } from "../types";
 import { drawerReducer, type DrawerState } from "./reducer";
 import { drawerEventEmitter } from "../events";

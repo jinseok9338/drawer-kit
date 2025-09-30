@@ -1,14 +1,51 @@
 {
   "name": "drawer-kit",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.1",
   "type": "module",
+  "description": "A declarative React drawer management library inspired by toss/overlay-kit",
+  "keywords": [
+    "react",
+    "drawer",
+    "modal",
+    "overlay",
+    "typescript",
+    "vaul"
+  ],
+  "author": "jinseok9338 <jinseok9338@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/jinseok9338/drawer-kit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinseok9338/drawer-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jinseok9338/drawer-kit/issues"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "CONTRIBUTING.en.md"
+  ],
   "scripts": {
     "dev": "vite",
     "dev:test-ui": "vite --config vite.test-ui.config.ts",
     "build": "tsc -b && vite build",
     "build:lib": "tsup",
     "build:test-ui": "vite build --config vite.test-ui.config.ts",
+    "prepublishOnly": "pnpm build:lib",
+    "prepack": "pnpm build:lib",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:test-ui": "vite preview --config vite.test-ui.config.ts",
@@ -16,10 +53,11 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
   },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.15",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
     "vaul": "^1.1.2"
   },
   "devDependencies": {
@@ -40,6 +78,8 @@
     "globals": "^16.4.0",
     "jsdom": "^25.0.1",
     "prettier": "^3.4.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "tsup": "^8.1.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.44.0",

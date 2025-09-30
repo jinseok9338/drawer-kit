@@ -14,6 +14,7 @@ export default defineConfig({
     options.jsx = "automatic";
     options.jsxImportSource = "react";
   },
+  tsconfig: "./tsconfig.app.json",
   onSuccess: async () => {
     console.log("✅ Library build completed successfully!");
   },
@@ -24,5 +25,3 @@ export default defineConfig({
     "process.env.NODE_ENV": '"production"',
   },
 });
-
-
